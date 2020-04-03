@@ -1,41 +1,42 @@
-import React, {Component} from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from "react-redux";
 import Character from './Character';
-import { Link } from "react-router-dom";
+import Link from '../Link'
+import {receiveCharacters, } from '../../actions';
 
-class Characters extends Component {
-    constructor() {
-        super();
-        this.state = {
-            characters: []
-        }
-    }
+// This is a selector function
+function selectCharacters(state) {
+    return state.characters;
+}
 
-    componentDidMount() {
+const Characters = () => {
+
+    const characters = useSelector(selectCharacters);
+    const dispatch = useDispatch();
+
+    useEffect(()=> {
         fetch('https://rickandmortyapi.com/api/character/')
             .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    characters: data.results
-                })
-            });
-    }
+            .then(data => dispatch(receiveCharacters(data.results)));
+            // eslint-disable-next-line
+    }, []);
 
-    render() {
-
-        const characterList = this.state.characters.map(character => (
-            <Link to={`/characters/${character.id}`} key={character.id}>
-                <li>
-                    <Character character={character} />
-                </li>
+    const characterList = characters.map(character => (
+        <li  key={character.id}>
+            <Link to={`/characters/${character.id}`}>
+                <Character character={character} />
             </Link>
-        ));
+        </li>
+    ));
 
-        return (
-            <ul>
-                {characterList}
-            </ul>
-        );
-    }
-}
+    return (
+        <ul>
+            <li>
+                <Link to="https//www.github.com">External link</Link>
+            </li>
+            {characterList}
+        </ul>
+    );
+};
 
 export default Characters;
