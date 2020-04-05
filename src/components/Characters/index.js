@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
+import Grid from '@material-ui/core/Grid';
+
 import Character from './Character';
 import Link from '../Link'
 import {receiveCharacters, } from '../../actions';
@@ -22,20 +24,17 @@ const Characters = () => {
     }, []);
 
     const characterList = characters.map(character => (
-        <li  key={character.id}>
-            <Link to={`/characters/${character.id}`}>
+        <Grid item xs={12} md={4} lg={3} key={character.id}>
+            <Link to={`/characters/${character.id}`} style={{textDecoration: 'none'}}>
                 <Character character={character} />
             </Link>
-        </li>
+        </Grid>
     ));
 
     return (
-        <ul>
-            <li>
-                <Link to="https//www.github.com">External link</Link>
-            </li>
+        <Grid container spacing={3}>
             {characterList}
-        </ul>
+        </Grid>
     );
 };
 
