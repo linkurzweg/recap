@@ -27,7 +27,7 @@ const App = () => {
                 <Router>
                     <NavBar/>
                     <Container maxWidth="lg" style={{padding: '30px 0'}}>
-                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/" component={Characters}/>
                         <Route path="/characters/:id" component={CharacterDetail}/>
                         <Route exact path="/characters" component={Characters}/>
                     </Container>
